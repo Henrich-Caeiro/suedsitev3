@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "sued-studio/hero",
+  "version": "1.0.0",
+  "title": "Hero Section",
+  "category": "sued-studio",
+  "description": "Full-viewport hero with Three.js particle canvas and cursor parallax.",
+  "keywords": ["hero", "banner", "three.js"],
+  "textdomain": "sued-studio",
+  "attributes": {
+    "headline":    { "type": "string", "default": "Estratégia que\ngera resultado." },
+    "subheadline": { "type": "string", "default": "Não entregamos sites bonitos — entregamos ferramentas que convertem com propósito." },
+    "ctaLabel":    { "type": "string", "default": "Conheça nossa abordagem" },
+    "ctaUrl":      { "type": "string", "default": "#positioning" },
+    "ctaSecLabel": { "type": "string", "default": "Ver nossos projetos" },
+    "ctaSecUrl":   { "type": "string", "default": "#results" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full"],
+    "anchor": true
+  },
+  "style":       "file:./style.css",
+  "render":      "file:./template.php"
+}

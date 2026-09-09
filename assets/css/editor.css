@@ -1,0 +1,10 @@
+/* ── Editor Styles ────────────────────────────────────────── */
+body {
+  background: #0F1923;
+  color: #F5F2EC;
+  font-family: 'Open Sans', system-ui, sans-serif;
+}
+.editor-styles-wrapper {
+  background: #0F1923 !important;
+  color: #F5F2EC !important;
+}
