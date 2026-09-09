@@ -18,7 +18,7 @@ Formato: [Semver](https://semver.org) · Ordenação: mais recente primeiro.
   - **Instagram** → `@sued_studio` (instagram.com/sued_studio)
   - **Facebook** → facebook.com/suedstudio
   - **LinkedIn** → linkedin.com/company/suedstudio
-  - **WhatsApp** → mesmo número do botão flutuante existente (`wa.me/5516996447317`)
+  - **WhatsApp** → mesmo número do botão flutuante existente (`wa.me/5516999943952`)
   - Cada link usa SVG inline + label de texto, estilizados com as novas classes `.sued-social-links` / `.sued-social-link`.
 
 - **`assets/css/global.css`**: Adicionados estilos para os links sociais do footer:
