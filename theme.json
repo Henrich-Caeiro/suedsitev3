@@ -398,6 +398,13 @@
       "postTypes": [
         "page"
       ]
+    },
+    {
+      "name": "quiz",
+      "title": "Quiz Diagnóstico",
+      "postTypes": [
+        "page"
+      ]
     }
   ],
   "patterns": []

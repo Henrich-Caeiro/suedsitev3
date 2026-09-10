@@ -5,6 +5,64 @@ Formato: [Semver](https://semver.org) · Ordenação: mais recente primeiro.
 
 ---
 
+## [1.6.1] — 2026-09-10
+
+### Navegação — Links para o Diagnóstico Digital no Menu e Footer
+
+- **`parts/header.html`**:
+  - Adicionado link "Diagnóstico" (`/quiz`) na barra de navegação principal do header (desktop e mobile).
+  - Atualizadas as rotas relativas das âncoras internas (`/#positioning`, `/#process`, `/#services`, `/#results`), garantindo que o usuário consiga navegar de volta para as seções da página inicial mesmo quando estiver navegando a partir da página do Quiz (`/quiz`).
+
+- **`parts/footer.html`**:
+  - Adicionado link "Diagnóstico Digital" (`/quiz`) sob a coluna "Navegação" do rodapé, estruturado com blocos explícitos `wp:navigation-link`.
+
+- **Bump de Versão**:
+  - `style.css` atualizado de `1.6.0` para `1.6.1`.
+  - `functions.php` atualizado de `1.6.0` para `1.6.1` (`SUED_VERSION`), assegurando atualização imediata dos caches de navegadores.
+
+---
+
+## [1.6.0] — 2026-09-10
+
+### Quiz Interativo — Diagnóstico Digital Gratuito
+
+Nova funcionalidade estratégica desenvolvida de acordo com as diretrizes de `new_feature.md` para qualificação e diagnóstico de maturidade digital de leads.
+
+- **Banco de Dados Próprio (`wp_sued_quiz_leads`)**:
+  - Criada automaticamente via `dbDelta` em `inc/quiz-handler.php` com índices em `email`, `status`, `score` e `created_at`.
+  - Armazena todas as respostas estruturadas em JSON, pontuação (score), perfil gerado, dados de contato completos, consentimento LGPD, IP e metadados.
+
+- **Endpoint REST Seguro**:
+  - Registrado `POST /wp-json/sued/v1/quiz-submit` com verificação de nonce (`wp_rest`), sanitização de campos (`sanitize_text_field`, `sanitize_email`), validação de e-mail e rate limiting via Transients.
+  - **Anti-Spam Honeypot**: Campo oculto `sued_hp_check` para neutralização transparente de submissões automatizadas por bots.
+  - **Consentimento LGPD**: Validação obrigatória de consentimento do usuário antes da persistência dos dados.
+
+- **Segurança & Correção XSS**:
+  - Implementada função `escapeHtml()` em `assets/js/quiz.js` para escapar nome e negócio antes da renderização no DOM, impedindo injeção arbitrária de tags HTML ou scripts maliciosos.
+
+- **Notificações por E-mail**:
+  - Disparo automático via `wp_mail` para os 3 e-mails configurados: `henrich.caeiro@gmail.com`, `le_19camargo@hotmail.com` e `heloheloisa.srf@gmail.com`.
+  - Template HTML personalizado com a identidade visual da SUED Studio (Dark Navy, ciano `#26AFFF`, dourado `#C8A96E`), resumo das respostas, pontuação, perfil e botões diretos para WhatsApp e painel administrativo.
+
+- **Painel CRM no WP-Admin (`sued-quiz-leads`)**:
+  - Menu administrativo integrado em **Leads SUED > Quiz Diagnóstico**.
+  - Estilização completa alinhada à identidade visual do site (Dark mode `#0F1923`/`#141F2B`, bordas `#2A3A47`, tipografia limpa).
+  - Cards com métricas e contadores em tempo real para status: *Novos* (`⚡`), *Contactados* (`📞`), *Convertidos* (`💎`) e *Desqualificados* (`✖`).
+  - Visualização detalhada do lead com histórico das 6 respostas estratégicas, links de contato rápido (mailto e WhatsApp com `wa.me`) e botões de transição de status protegidos por nonce.
+  - Suporte a shortcode `[sued_quiz]` para renderização flexível.
+
+- **Gutenberg Block & Templates FSE**:
+  - Criado o bloco Gutenberg dinâmico `sued-studio/quiz` (`blocks/quiz/`).
+  - Criados os templates de bloco FSE `templates/page-quiz.html` e `templates/page-diagnostico.html` para rotas automáticas `/quiz` e `/diagnostico`.
+  - Registrado template de página `quiz` ("Quiz Diagnóstico") em `theme.json` (`customTemplates`) e criado o template PHP clássico `template-quiz.php`.
+  - Estilos dedicados em `assets/css/quiz.css` e motor interativo em `assets/js/quiz.js`.
+
+- **Bump de Versão**:
+  - `style.css` atualizado de `1.5.3` para `1.6.0`.
+  - `functions.php` atualizado de `1.5.2` para `1.6.0` (`SUED_VERSION`), garantindo cache-busting imediato de todos os assets CSS/JS.
+
+---
+
 ## [1.5.3] — 2026-05-10
 
 ### Services — Grid 2×2 para Desktop
