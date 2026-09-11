@@ -5,6 +5,112 @@ Formato: [Semver](https://semver.org) · Ordenação: mais recente primeiro.
 
 ---
 
+## [1.6.3] — 2026-09-11
+
+### Correção de Precedência de Template FSE e Header no `/diagnostico`
+
+- **Resolução de Conflito de Precedência de Template no Banco**:
+  - Identificado que a página `/diagnostico` utilizava o modelo `blank` no banco de dados (`wp_posts`, ID `9`), que sobrescrevia os arquivos do tema e carregava o `header` institucional completo com os links da homepage.
+  - Atualizado o template `blank` no banco de dados para carregar `<!-- wp:template-part {"slug":"header-quiz"} /-->` e o bloco nativo `<!-- wp:sued-studio/quiz /-->`.
+  - Definido o atributo `_wp_page_template` da página `/diagnostico` como `'default'`, fazendo com que o WordPress renderize diretamente o template físico `templates/page-diagnostico.html`.
+
+- **Criação do Template Físico `templates/blank.html`**:
+  - Adicionado o arquivo `templates/blank.html` no tema com a estrutura limpa contendo `header-quiz`, bloco do quiz e `footer`, assegurando consistência total e prevenindo regressões caso o modelo seja selecionado ou redefinido no painel.
+
+- **Estilização e Centralização do Header**:
+  - Adicionadas regras específicas em `assets/css/header.css` (`.sued-header-quiz .sued-container`) com `justify-content: center !important` e respiro vertical (`padding-block: 1.5rem` desktop / `1rem` mobile), garantindo o alinhamento central do logo.
+
+- **Bump de Versão**:
+  - `style.css` atualizado para `1.6.3`.
+  - `functions.php` atualizado para `1.6.3` (`SUED_VERSION`), garantindo a invalidação imediata de cache nos navegadores.
+
+---
+
+## [1.6.2] — 2026-09-11
+
+### Correções e Consolidação da Rota `/diagnostico`
+
+- **Remoção de Redundância de Templates**:
+  - Excluído o template redundante `templates/page-quiz.html`, mantendo `templates/page-diagnostico.html` como o template oficial de bloco FSE para a rota `/diagnostico`.
+  - Atualizado o fallback de origem (`$source`) em `inc/quiz-handler.php` para apontar por padrão para `home_url('/diagnostico')`.
+  - Atualizados os dados de configuração em `template-quiz.php` (URL Calendly e WhatsApp) para manter paridade com o bloco Gutenberg.
+
+- **Menu e Header Dedicados para o Quiz**:
+  - Criado o template part `parts/header-quiz.html`, contendo unicamente o logo da SUED Studio linkado para a homepage, eliminando as âncoras da página inicial durante a realização do diagnóstico.
+  - Registrado o template part `header-quiz` em `theme.json`.
+  - Aplicado `parts/header-quiz.html` e `parts/footer.html` dentro de `templates/page-diagnostico.html` e `templates/quiz.html`.
+
+- **Ajustes de Navegação Global**:
+  - Ajustados os links "Diagnóstico" no cabeçalho principal (`parts/header.html`) e "Diagnóstico Digital" no rodapé (`parts/footer.html`) para apontarem definitivamente para `/diagnostico`.
+
+- **Ajustes de Estilo e Responsividade**:
+  - Aumentado o padding superior de `.sued-quiz-wrapper` para `120px` em `assets/css/quiz.css` para evitar sobreposição pelo cabeçalho fixo.
+  - Aumentada a margem inferior de `.sued-quiz-header` para `64px` (com `40px` responsivo no mobile) para melhor respiro visual.
+
+- **Bump de Versão**:
+  - `style.css` atualizado para `1.6.2`.
+  - `functions.php` atualizado para `1.6.2` (`SUED_VERSION`).
+
+---
+
+## [1.6.1] — 2026-09-10
+
+### Navegação — Links para o Diagnóstico Digital no Menu e Footer
+
+- **`parts/header.html`**:
+  - Adicionado link "Diagnóstico" (`/quiz`) na barra de navegação principal do header (desktop e mobile).
+  - Atualizadas as rotas relativas das âncoras internas (`/#positioning`, `/#process`, `/#services`, `/#results`), garantindo que o usuário consiga navegar de volta para as seções da página inicial mesmo quando estiver navegando a partir da página do Quiz (`/quiz`).
+
+- **`parts/footer.html`**:
+  - Adicionado link "Diagnóstico Digital" (`/quiz`) sob a coluna "Navegação" do rodapé, estruturado com blocos explícitos `wp:navigation-link`.
+
+- **Bump de Versão**:
+  - `style.css` atualizado de `1.6.0` para `1.6.1`.
+  - `functions.php` atualizado de `1.6.0` para `1.6.1` (`SUED_VERSION`), assegurando atualização imediata dos caches de navegadores.
+
+---
+
+## [1.6.0] — 2026-09-10
+
+### Quiz Interativo — Diagnóstico Digital Gratuito
+
+Nova funcionalidade estratégica desenvolvida de acordo com as diretrizes de `new_feature.md` para qualificação e diagnóstico de maturidade digital de leads.
+
+- **Banco de Dados Próprio (`wp_sued_quiz_leads`)**:
+  - Criada automaticamente via `dbDelta` em `inc/quiz-handler.php` com índices em `email`, `status`, `score` e `created_at`.
+  - Armazena todas as respostas estruturadas em JSON, pontuação (score), perfil gerado, dados de contato completos, consentimento LGPD, IP e metadados.
+
+- **Endpoint REST Seguro**:
+  - Registrado `POST /wp-json/sued/v1/quiz-submit` com verificação de nonce (`wp_rest`), sanitização de campos (`sanitize_text_field`, `sanitize_email`), validação de e-mail e rate limiting via Transients.
+  - **Anti-Spam Honeypot**: Campo oculto `sued_hp_check` para neutralização transparente de submissões automatizadas por bots.
+  - **Consentimento LGPD**: Validação obrigatória de consentimento do usuário antes da persistência dos dados.
+
+- **Segurança & Correção XSS**:
+  - Implementada função `escapeHtml()` em `assets/js/quiz.js` para escapar nome e negócio antes da renderização no DOM, impedindo injeção arbitrária de tags HTML ou scripts maliciosos.
+
+- **Notificações por E-mail**:
+  - Disparo automático via `wp_mail` para os 3 e-mails configurados: `henrich.caeiro@gmail.com`, `le_19camargo@hotmail.com` e `heloheloisa.srf@gmail.com`.
+  - Template HTML personalizado com a identidade visual da SUED Studio (Dark Navy, ciano `#26AFFF`, dourado `#C8A96E`), resumo das respostas, pontuação, perfil e botões diretos para WhatsApp e painel administrativo.
+
+- **Painel CRM no WP-Admin (`sued-quiz-leads`)**:
+  - Menu administrativo integrado em **Leads SUED > Quiz Diagnóstico**.
+  - Estilização completa alinhada à identidade visual do site (Dark mode `#0F1923`/`#141F2B`, bordas `#2A3A47`, tipografia limpa).
+  - Cards com métricas e contadores em tempo real para status: *Novos* (`⚡`), *Contactados* (`📞`), *Convertidos* (`💎`) e *Desqualificados* (`✖`).
+  - Visualização detalhada do lead com histórico das 6 respostas estratégicas, links de contato rápido (mailto e WhatsApp com `wa.me`) e botões de transição de status protegidos por nonce.
+  - Suporte a shortcode `[sued_quiz]` para renderização flexível.
+
+- **Gutenberg Block & Templates FSE**:
+  - Criado o bloco Gutenberg dinâmico `sued-studio/quiz` (`blocks/quiz/`).
+  - Criados os templates de bloco FSE `templates/page-quiz.html` e `templates/page-diagnostico.html` para rotas automáticas `/quiz` e `/diagnostico`.
+  - Registrado template de página `quiz` ("Quiz Diagnóstico") em `theme.json` (`customTemplates`) e criado o template PHP clássico `template-quiz.php`.
+  - Estilos dedicados em `assets/css/quiz.css` e motor interativo em `assets/js/quiz.js`.
+
+- **Bump de Versão**:
+  - `style.css` atualizado de `1.5.3` para `1.6.0`.
+  - `functions.php` atualizado de `1.5.2` para `1.6.0` (`SUED_VERSION`), garantindo cache-busting imediato de todos os assets CSS/JS.
+
+---
+
 ## [1.5.3] — 2026-05-10
 
 ### Services — Grid 2×2 para Desktop
@@ -18,7 +124,7 @@ Formato: [Semver](https://semver.org) · Ordenação: mais recente primeiro.
   - **Instagram** → `@sued_studio` (instagram.com/sued_studio)
   - **Facebook** → facebook.com/suedstudio
   - **LinkedIn** → linkedin.com/company/suedstudio
-  - **WhatsApp** → mesmo número do botão flutuante existente (`wa.me/5516996447317`)
+  - **WhatsApp** → mesmo número do botão flutuante existente (`wa.me/5516999943952`)
   - Cada link usa SVG inline + label de texto, estilizados com as novas classes `.sued-social-links` / `.sued-social-link`.
 
 - **`assets/css/global.css`**: Adicionados estilos para os links sociais do footer:

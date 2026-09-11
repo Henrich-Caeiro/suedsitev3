@@ -379,6 +379,11 @@
       "area": "header"
     },
     {
+      "name": "header-quiz",
+      "title": "Header Quiz",
+      "area": "header"
+    },
+    {
       "name": "footer",
       "title": "Footer",
       "area": "footer"
@@ -395,6 +400,13 @@
     {
       "name": "landing",
       "title": "Landing Page",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "quiz",
+      "title": "Quiz Diagnóstico",
       "postTypes": [
         "page"
       ]

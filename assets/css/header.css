@@ -32,6 +32,10 @@
   gap: 2rem;
   padding-block: 1.1rem;
 }
+.sued-header-quiz .sued-container {
+  justify-content: center !important;
+  padding-block: 1.5rem !important;
+}
 .sued-logo img {
   height: 36px;
   width: auto;
