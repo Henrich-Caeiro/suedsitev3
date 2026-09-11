@@ -1,30 +1,26 @@
-# New Feature / Ajustes — Tema WordPress SUED Studio
+# Correções / Ajustes — Tema WordPress SUED Studio
 
 ## Objetivo
-Criar um quiz interativo para diagnosticar a presença e a maturidade digital dos nossos leads
+Realizar correções e ajustes apenas na página do quiz interativo (`/diagnostico`).
+---
+
+## 1. Header menu
+
+### Estilo
+
+- O header deve ter margin-bottom ou padding-bottom maior do que esta atualmente. Avalie a responsividade.
+
+### Links de Navegação
+
+- Link Diagnóstico deve levar para a página do quiz interativo (`/diagnostico`).
+- O menu de navegação nao deve ter os mesmos links da homepage, uma vez que os links da homepage são para as seções da própria homepage.
+- O menu deve conter apenas o logo, levando o usuário para a homepage.
 
 ---
 
-## 1. Quiz Interativo
+## 2. Footer
 
-### Banco de dados
-- Todas as informações devem ser salvas no banco de dados wordpress, em uma tabela própria (custom table).
-- Após o envio do forms, uma notificação deve ser enviada para os emails:
-[henrich.caeiro@gmail.com], [le_19camargo@hotmail.com] e [heloheloisa.srf@gmail.com].
+### Links de Navegação
 
----
-
-### Painel wordpress
-- Deve haver um CRM com os leads cadastrados e suas respostas
-- O CRM pode manter o mesmo formato do outro, já existente. Mas o visual, os estilos, devem seguir a identidade visual do site.
-
----
-
-### Itens essenciais:
-
-- transforme o HTML em uma página/template do WordPress;
-- envie as respostas para um endpoint REST seguro;
-- salve os dados em uma tabela própria ou em um Custom Post Type;
-- aplique nonce, sanitização, validação, proteção contra spam e consentimento LGPD;
-- corrija a renderização de nome e negocio para evitar inserção insegura de HTML.
-- Mantenha o visual moderno e agradável, seguindo a identidade visual do site.
+- Diagnóstico deve levar para a página do quiz interativo (`/diagnostico`).
+- 

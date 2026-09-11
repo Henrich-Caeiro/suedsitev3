@@ -130,7 +130,7 @@ function sued_rest_handle_quiz_submit(WP_REST_Request $request): WP_REST_Respons
     $score         = absint($params['pontuacaoTotal'] ?? $params['score'] ?? 0);
     $profile       = sanitize_text_field($params['perfil'] ?? '');
     $lgpd_consent  = !empty($params['lgpd']) ? 1 : 0;
-    $source        = esc_url_raw($params['source'] ?? wp_get_referer() ?: home_url('/quiz'));
+    $source        = esc_url_raw($params['source'] ?? wp_get_referer() ?: home_url('/diagnostico'));
     $user_agent    = sanitize_text_field(substr(wp_unslash($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 500));
 
     // Raw/Structured answers array to JSON

@@ -5,6 +5,54 @@ Formato: [Semver](https://semver.org) · Ordenação: mais recente primeiro.
 
 ---
 
+## [1.6.3] — 2026-09-11
+
+### Correção de Precedência de Template FSE e Header no `/diagnostico`
+
+- **Resolução de Conflito de Precedência de Template no Banco**:
+  - Identificado que a página `/diagnostico` utilizava o modelo `blank` no banco de dados (`wp_posts`, ID `9`), que sobrescrevia os arquivos do tema e carregava o `header` institucional completo com os links da homepage.
+  - Atualizado o template `blank` no banco de dados para carregar `<!-- wp:template-part {"slug":"header-quiz"} /-->` e o bloco nativo `<!-- wp:sued-studio/quiz /-->`.
+  - Definido o atributo `_wp_page_template` da página `/diagnostico` como `'default'`, fazendo com que o WordPress renderize diretamente o template físico `templates/page-diagnostico.html`.
+
+- **Criação do Template Físico `templates/blank.html`**:
+  - Adicionado o arquivo `templates/blank.html` no tema com a estrutura limpa contendo `header-quiz`, bloco do quiz e `footer`, assegurando consistência total e prevenindo regressões caso o modelo seja selecionado ou redefinido no painel.
+
+- **Estilização e Centralização do Header**:
+  - Adicionadas regras específicas em `assets/css/header.css` (`.sued-header-quiz .sued-container`) com `justify-content: center !important` e respiro vertical (`padding-block: 1.5rem` desktop / `1rem` mobile), garantindo o alinhamento central do logo.
+
+- **Bump de Versão**:
+  - `style.css` atualizado para `1.6.3`.
+  - `functions.php` atualizado para `1.6.3` (`SUED_VERSION`), garantindo a invalidação imediata de cache nos navegadores.
+
+---
+
+## [1.6.2] — 2026-09-11
+
+### Correções e Consolidação da Rota `/diagnostico`
+
+- **Remoção de Redundância de Templates**:
+  - Excluído o template redundante `templates/page-quiz.html`, mantendo `templates/page-diagnostico.html` como o template oficial de bloco FSE para a rota `/diagnostico`.
+  - Atualizado o fallback de origem (`$source`) em `inc/quiz-handler.php` para apontar por padrão para `home_url('/diagnostico')`.
+  - Atualizados os dados de configuração em `template-quiz.php` (URL Calendly e WhatsApp) para manter paridade com o bloco Gutenberg.
+
+- **Menu e Header Dedicados para o Quiz**:
+  - Criado o template part `parts/header-quiz.html`, contendo unicamente o logo da SUED Studio linkado para a homepage, eliminando as âncoras da página inicial durante a realização do diagnóstico.
+  - Registrado o template part `header-quiz` em `theme.json`.
+  - Aplicado `parts/header-quiz.html` e `parts/footer.html` dentro de `templates/page-diagnostico.html` e `templates/quiz.html`.
+
+- **Ajustes de Navegação Global**:
+  - Ajustados os links "Diagnóstico" no cabeçalho principal (`parts/header.html`) e "Diagnóstico Digital" no rodapé (`parts/footer.html`) para apontarem definitivamente para `/diagnostico`.
+
+- **Ajustes de Estilo e Responsividade**:
+  - Aumentado o padding superior de `.sued-quiz-wrapper` para `120px` em `assets/css/quiz.css` para evitar sobreposição pelo cabeçalho fixo.
+  - Aumentada a margem inferior de `.sued-quiz-header` para `64px` (com `40px` responsivo no mobile) para melhor respiro visual.
+
+- **Bump de Versão**:
+  - `style.css` atualizado para `1.6.2`.
+  - `functions.php` atualizado para `1.6.2` (`SUED_VERSION`).
+
+---
+
 ## [1.6.1] — 2026-09-10
 
 ### Navegação — Links para o Diagnóstico Digital no Menu e Footer

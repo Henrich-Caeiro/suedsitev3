@@ -14,8 +14,8 @@ wp_enqueue_script('sued-quiz-js',  SUED_URI . '/assets/js/quiz.js', [], SUED_VER
 wp_localize_script('sued-quiz-js', 'SUED_QUIZ_CONFIG', [
     'restUrl'     => esc_url_raw(rest_url('sued/v1/quiz-submit')),
     'nonce'       => wp_create_nonce('wp_rest'),
-    'calendlyUrl' => 'https://calendly.com/suedstudio/diagnostico',
-    'whatsappNum' => '5516999999999',
+    'calendlyUrl' => 'https://calendly.com/suedstudio/30min',
+    'whatsappNum' => '+5516999943952',
     'agencyName'  => 'SUED Studio',
     'siteUrl'     => home_url('/'),
 ]);

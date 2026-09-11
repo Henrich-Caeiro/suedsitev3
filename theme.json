@@ -379,6 +379,11 @@
       "area": "header"
     },
     {
+      "name": "header-quiz",
+      "title": "Header Quiz",
+      "area": "header"
+    },
+    {
       "name": "footer",
       "title": "Footer",
       "area": "footer"

@@ -4,7 +4,7 @@
  */
 defined('ABSPATH') || exit;
 
-define('SUED_VERSION', '1.6.1');
+define('SUED_VERSION', '1.6.3');
 define('SUED_DIR',     get_template_directory());
 define('SUED_URI',     get_template_directory_uri());
 

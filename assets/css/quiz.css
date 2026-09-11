@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 48px 20px 80px;
+  padding: 120px 20px 80px;
   background: radial-gradient(circle at 50% 20%, #141F2B 0%, #0A1118 100%);
   background-attachment: fixed;
   color: var(--sued-light, #F5F2EC);
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: 64px;
 }
 
 .sued-quiz-logo {
@@ -492,6 +492,7 @@
   .sued-quiz-card { padding: 28px 20px; }
   .sued-quiz-intro-title { font-size: 28px; }
   .sued-quiz-question-text { font-size: 20px; }
+  .sued-quiz-header { margin-bottom: 40px; }
 }
 
 .sued-diag-item {
